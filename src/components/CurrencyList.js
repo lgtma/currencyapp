@@ -1,6 +1,6 @@
 import React from "react";
 
-import { currencyName } from "../helpers";
+import { currencyName, formatter } from "../helpers";
 import CurrencyItem from "./CurrencyItem";
 
 const CurrencyList = ({ currencies, inputValue, onItemRemove }) => {
@@ -8,21 +8,21 @@ const CurrencyList = ({ currencies, inputValue, onItemRemove }) => {
     .sort()
     .map(key => {
       const currency = currencyName(key);
-      const currencyValue = currencies[key];
+      const currencyValue = formatter.format(currencies[key]);
+      const conversionValue = formatter.format(currencyValue * inputValue);
       return (
         <CurrencyItem
           currencyKey={key}
           currencyName={currency}
           currencyValue={currencyValue}
-          inputValue={inputValue}
-          key={key}
+          conversionValue={conversionValue}
           onItemRemove={onItemRemove}
+          key={key}
         />
       );
     });
 
-  if (isNaN(inputValue))
-    renderList = <span className="red">Cannot convert empty value!</span>;
+  if (isNaN(inputValue)) renderList = <span>Cannot convert empty value!</span>;
 
   return (
     <div className="ui segment">

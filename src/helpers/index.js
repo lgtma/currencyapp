@@ -24,7 +24,7 @@ export const currencyName = key => {
 
   switch (key) {
     case "AUD":
-      currency = "Australian dolar";
+      currency = "Australian Dollar";
       break;
     case "BGN":
       currency = "Bulgarian Lev";

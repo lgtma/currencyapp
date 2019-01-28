@@ -9,14 +9,13 @@ import CurrencyOptions from "./CurrencyOptions";
 
 class App extends React.Component {
   state = {
-    _currencies: {},
     _currenciesList: {},
     _currenciesOption: {},
     _selectedItem: null,
     _initValue: 10,
     _showOptions: false,
     _isLoading: true,
-    _errorFetch: false
+    _error: false
   };
 
   componentDidMount() {
@@ -28,23 +27,17 @@ class App extends React.Component {
       .get("/latest?base=USD")
       .then(response => {
         const rates = response.data.rates;
-        this.setState({
-          _currencies: rates,
-          _isLoading: false
-        });
+        this.setState({ _isLoading: false });
 
         // exclude USD from currencies object list
         const { USD, ...curs } = rates;
-        this.currencyLists(curs);
 
-        const currencies_options = Object.entries(curs)
-          .sort()
-          .slice(4);
-        this.currencyOptions(currencies_options);
+        this.currencyLists(curs);
+        this.currencyOptions(curs);
       })
       .catch(error => {
         console.log(error);
-        this.setState({ _errorFetch: true });
+        this.setState({ _error: true });
       });
   }
 
@@ -53,13 +46,14 @@ class App extends React.Component {
       .sort()
       .slice(0, 4);
     currencies_list = reverseObjectEntries(currencies_list);
-    // set state currency list
     this.setState({ _currenciesList: currencies_list });
   };
 
   currencyOptions = val => {
-    const currencies_option = reverseObjectEntries(val);
-    // set state currency options
+    let currencies_option = Object.entries(val)
+      .sort()
+      .slice(4);
+    currencies_option = reverseObjectEntries(currencies_option);
     this.setState({ _currenciesOption: currencies_option });
   };
 
@@ -73,9 +67,8 @@ class App extends React.Component {
 
     if (item !== currentSelectedItem) {
       this.setState({ _selectedItem: item });
-
       // get item value from rates
-      const itemValue = this.state._currencies[item];
+      const itemValue = this.state._currenciesOption[item];
 
       // add item to currency list state
       const currentList = this.state._currenciesList;
@@ -107,7 +100,7 @@ class App extends React.Component {
   render() {
     return (
       <div
-        style={{ marginTop: "16px", marginBottom: "16px" }}
+        style={{ marginTop: "1rem", marginBottom: "1rem" }}
         className="ui container"
       >
         <CurrencyInput
@@ -117,7 +110,7 @@ class App extends React.Component {
 
         {this.state._isLoading ? (
           <div className="ui segment" style={{ padding: "2rem" }}>
-            {this.state._errorFetch ? (
+            {this.state._error ? (
               <span>Something went wrong...</span>
             ) : (
               <div className="ui active loader" />

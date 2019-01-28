@@ -27,13 +27,13 @@ class CurrencyOptions extends React.Component {
     return (
       <div className="ui form" style={{ marginTop: "1rem" }}>
         <div className="inline fields">
-          <div className="field">
+          <div className="field" style={{ marginBottom: "1rem" }}>
             <select className="ui dropdown" onChange={this.onSelectChange}>
               <option value="">Select Currency</option>
               {renderOptions}
             </select>
           </div>
-          <div className="field">
+          <div className="field" style={{ marginBottom: "1rem" }}>
             <button
               className="ui button"
               onClick={() => this.props.onItemSelect(this.state._selectValue)}
