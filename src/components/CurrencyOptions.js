@@ -9,6 +9,7 @@ class CurrencyOptions extends React.Component {
 
   onSelectChange = e => {
     this.setState({ _selectValue: e.target.value });
+    console.log(e.target.value);
   };
 
   render() {

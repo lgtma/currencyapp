@@ -64,8 +64,7 @@ class App extends React.Component {
 
   onItemSelect = item => {
     const currentSelectedItem = this.state._selectedItem;
-
-    if (item !== currentSelectedItem) {
+    if (item && item !== currentSelectedItem) {
       this.setState({ _selectedItem: item });
       // get item value from rates
       const itemValue = this.state._currenciesOption[item];
