@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
-    command: npm start
+    command: npm run dev
     ports:
       - 3000:3000
     volumes:
