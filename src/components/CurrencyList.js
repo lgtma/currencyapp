@@ -9,7 +9,7 @@ const CurrencyList = ({ currencies, inputValue, onItemRemove }) => {
     .map(key => {
       const currency = currencyName(key);
       const currencyValue = formatter.format(currencies[key]);
-      const conversionValue = formatter.format(currencyValue * inputValue);
+      const conversionValue = formatter.format(currencies[key] * inputValue);
       return (
         <CurrencyItem
           currencyKey={key}
